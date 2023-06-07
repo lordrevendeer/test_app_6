@@ -1,0 +1,18 @@
+<% if @article.errors.any? %>
+  <h2>The following errors prevented creation of article</h2>
+  <ul>
+    <% @article.errors.full_messages.each do |msg| %>
+    <%= msg %>
+    <% end %>
+  </ul>
+<% end %>   
+
+<%= form_with(model: @article, local: true) do |f| %>
+  <p>
+    <%= f.label :title %> <br>
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>    
