@@ -18,6 +18,7 @@ class ArticlesController < ApplicationController
     def create
         @article = Article.new(article_params)
         @article.user = current_user
+
         if @article.save
           flash[:notice] = "Article displayed successfully"  
           redirect_to @article
@@ -52,7 +53,7 @@ private
    end   
    
    def article_params
-     params.require(:article).permit(:title, :description, :days)
+     params.require(:article).permit(:title, :description, :days,  :frequency, :category_id)
    end 
 
    def require_same_user
