@@ -12,14 +12,14 @@ class UsersController < ApplicationController
     end
     
     def show
-        @articles = @user.articles.paginate(page: params[:page], per_page: 5)
+        @habits = @user.habits.paginate(page: params[:page], per_page: 5)
     end
 
     def create
         @user = User.new(user_params)
         if @user.save
             session[:user_id] = @user.id
-            flash[:notice] = "Welcome to the Alpha Blog #{@user.username}, you have successfully signed up"
+            flash[:notice] = "Welcome to Habitrack #{@user.username}, you have successfully signed up"
             redirect_to @user
         else
             render 'new'
@@ -32,8 +32,8 @@ class UsersController < ApplicationController
     def destroy
         @user.destroy
         session[:user_id] = nil if @user == current_user
-        flash[:notice] = "Account and all associated articles deleted"
-        redirect_to articles_path
+        flash[:notice] = "Account and all associated habits deleted"
+        redirect_to habits_path
     end    
     
     def update

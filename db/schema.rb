@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_13_172057) do
+ActiveRecord::Schema.define(version: 2023_06_13_173003) do
 
   create_table "article_categories", force: :cascade do |t|
     t.integer "article_id"
@@ -37,6 +37,12 @@ ActiveRecord::Schema.define(version: 2023_06_13_172057) do
 
   create_table "habits", force: :cascade do |t|
     t.string "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer "user_id"
+    t.text "description"
+    t.integer "days"
+    t.string "frequency"
   end
 
   create_table "stats", force: :cascade do |t|

@@ -1,0 +1,29 @@
+<h1 class="text-center">Showing habit details</h1>
+
+<h2 class="text-center mt-4"><%= @habit.title %></h2>
+<div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-8 mt-4">
+            <div class="card text-center shadow mb-5 bg-white rounded">
+                <div class="card-header font-italic">
+                   By <%= @habit.user.username %>
+                   <%= link_to gravatar_for(@habit.user), user_path(@habit.user) %>
+                </div>
+                <div class="card-body">
+                <p class="card-text"><div class="card-text text-center"><%= simple_format(@habit.description) %></div></p>
+                <% if logged_in? && (@habit.user == current_user || current_user.admin?) %>
+                <%= link_to "Edit", edit_habit_path(@habit), class: "btn btn-outline-info" %>
+                <%= link_to "Delete", habit_path(@habit), class: "btn btn-outline-danger", method: :delete, data: {confirm: "Are you sure?"} %>
+                <% end %>
+                </div>
+                <div class="card-footer text-muted">
+                <small >Created <%= time_ago_in_words(@habit.created_at) %> ago,
+                edited <%= time_ago_in_words(@habit.updated_at) %> ago</small>
+                </div>
+            </div>
+            </div>  
+        </div> 
+</div>
+
+
+

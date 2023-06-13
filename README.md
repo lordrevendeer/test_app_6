@@ -45,3 +45,10 @@ Things you may want to cover:
 
     assert_redirected_to categories_url
   end
+
+  <div class="form-group row">
+            <%= f.label :category, class: "col-2 col-form-label text-light" %>
+            <div class="col-10"> 
+                <%= f.collection_select(:category_ids, Category.all, :id, :name) %>
+            </div>
+          </div>
