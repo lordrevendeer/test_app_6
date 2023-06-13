@@ -1,4 +1,4 @@
-<h1>Showing article details</h1>
+<h1 class="text-center">Showing habit details</h1>
 
 <h2 class="text-center mt-4"><%= @article.title %></h2>
 <div class="container">
@@ -10,7 +10,7 @@
                    <%= link_to gravatar_for(@article.user), user_path(@article.user) %>
                 </div>
                 <div class="card-body">
-                <p class="card-text">The ID number is:<%= @article.id %></p>
+                <p class="card-text"><div class="card-text text-center"><%= simple_format(@article.description) %></div></p>
                 <% if logged_in? && (@article.user == current_user || current_user.admin?) %>
                 <%= link_to "Edit", edit_article_path(@article), class: "btn btn-outline-info" %>
                 <%= link_to "Delete", article_path(@article), class: "btn btn-outline-danger", method: :delete, data: {confirm: "Are you sure?"} %>
@@ -26,6 +26,3 @@
 </div>
 
 
-<p>
-    <%= link_to 'Create new Article',new_article_path %>
-</p>

@@ -6,16 +6,31 @@
           <div class="form-group row">
             <%= f.label :title, class: "col-2 col-form-label text-light" %> 
             <div class="col-10">
-              <%= f.text_field :title, class: "form-control shadow rounded", placeholder: "Title of article" %>
+              <%= f.text_field :title, class: "form-control shadow rounded", placeholder: "Habit name" %>
             </div>
           </div>
+
+          <div class="form-group row">
+            <%= f.label :description, class: "col-2 col-form-label text-light" %>
+            <div class="col-10"> 
+                <%= f.text_area :description, rows: 10, class: "form-control shadow rounded", placeholder: "Description of habit" %>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <%= f.label :days, class: "col-2 col-form-label text-light" %>
+            <div class="col-10"> 
+                <%= f.text_field :days, class: "form-control shadow rounded", placeholder: "Number of days targeted" %>
+            </div>
+          </div>
+
           <div class="form-group row justify-content-center">
-            <%= f.submit class: "btn btn-outline-light btn-lg" %>
+            <%= f.submit "Submit", class: "btn btn-outline-light btn-lg" %>
           </div>
         <% end %> 
       </div>
       <div class="mb-3">
-        <%= link_to 'Cancel and return to articles listing',articles_path,class: "text-info"%>
+        <%= link_to 'Cancel and return to habits listing',articles_path,class: "text-info"%>
       </div>
     </div>
 </div>   

@@ -52,7 +52,7 @@ private
    end   
    
    def article_params
-     params.require(:article).permit(:title)
+     params.require(:article).permit(:title, :description, :days)
    end 
 
    def require_same_user
