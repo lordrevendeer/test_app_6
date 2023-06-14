@@ -1,0 +1,5 @@
+<% Stat.all.each do |stat| %>
+      <% @habit = Habit[:stat.habit_id] %>
+      <%= render 'habits/no' , obj: @habit %>
+<% end %>
+

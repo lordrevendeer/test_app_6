@@ -37,6 +37,7 @@
         </div>        
 </div>
 
+<% t = 0 %>
 <% s = 0 %>
 <% d = 0 %>
 <% m = 0 %>
@@ -44,23 +45,28 @@
 
 <% if @habit.frequency == "Daily" %>
     <% Stat.all.each do |stat| %>
-      <% s=s+1 if stat.habit_id == @habit.id %>
+      <% s=s+1 if stat.habit_id == @habit.id && stat.done == true %>
+      <% t=t+1 if stat.habit_id == @habit.id  %>
     <% end %>
 <% end %>
 
 <% if @habit.frequency == "Weekly" %>
+    <% counter = 0 %>
     <% Stat.all.each do |stat| %>
-      <% s=s+1 if stat.habit_id == @habit.id %>
+      <% s=s+1 if stat.habit_id == @habit.id && stat.done == true %>
+      <% t=t+1 if stat.habit_id == @habit.id  %>
     <% end %>
 <% end %>
 
 <% if @habit.frequency == "Monthly" %>
+    <% prev = "0" %>
     <% Stat.all.each do |stat| %>
-      <% s=s+1 if stat.habit_id == @habit.id %>
+      <% s=s+1 if ((stat.habit_id == @habit.id )&& (stat.dates.strftime("%m") != prev))%>
+      <% t=t+1 if (stat.dates.strftime("%m") != prev)%>
     <% end %>
 <% end %>
 
-<%= pie_chart(yes:s, no:@habit.ndays) %>
+<%= pie_chart(yes:s, no:t-s) %>
 
 
 

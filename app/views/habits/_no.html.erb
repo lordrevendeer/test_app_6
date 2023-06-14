@@ -1,1 +1,8 @@
 <% @habit.ndays = @habit.ndays  %>
+
+
+<% @stat = Stat.new %>
+<% @stat.done = false %>
+<% @stat.habit_id = @habit.id %>
+<% @stat.dates =  DateTime.now.strftime "%d/%m/%y"%>
+<% @stat.save %>
