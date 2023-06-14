@@ -33,17 +33,32 @@
             <div class="dropdown-menu center" aria-labelledby="dropdownMenuLink">
                 <a class="dropdown-item" href="<%= render 'yes', obj: @habit %>">Yes</a>
                 <a class="dropdown-item" href="<%= render 'no', obj: @habit %>">No</a>
-                <a class="dropdown-item" href="#">Already answered for this time frame</a>
             </div>
         </div>        
 </div>
 
 <% s = 0 %>
+<% d = 0 %>
+<% m = 0 %>
+<% y = 0 %>
+
+<% if @habit.frequency == "Daily" %>
     <% Stat.all.each do |stat| %>
-
       <% s=s+1 if stat.habit_id == @habit.id %>
-
     <% end %>
+<% end %>
+
+<% if @habit.frequency == "Weekly" %>
+    <% Stat.all.each do |stat| %>
+      <% s=s+1 if stat.habit_id == @habit.id %>
+    <% end %>
+<% end %>
+
+<% if @habit.frequency == "Monthly" %>
+    <% Stat.all.each do |stat| %>
+      <% s=s+1 if stat.habit_id == @habit.id %>
+    <% end %>
+<% end %>
 
 <%= pie_chart(yes:s, no:@habit.ndays) %>
 
