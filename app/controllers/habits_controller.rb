@@ -18,7 +18,6 @@ class HabitsController < ApplicationController
     def create
         @habit = Habit.new(habit_params)
         @habit.user = current_user
-
         if @habit.save
           flash[:notice] = "Habit displayed successfully"  
           redirect_to @habit
