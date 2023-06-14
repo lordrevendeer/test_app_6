@@ -1,0 +1,6 @@
+<% @habit.ydays = @habit.ydays + 1  %>
+<% @habit.save %>
+<% @stat = Stat.new %>
+<% @stat.habit_id = @habit.id %>
+<% @stat.dates =  DateTime.now.strftime "%d/%m/%y"%>
+<% @stat.save %>
