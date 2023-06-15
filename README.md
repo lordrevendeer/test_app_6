@@ -52,3 +52,45 @@ Things you may want to cover:
                 <%= f.collection_select(:category_ids, Category.all, :id, :name) %>
             </div>
           </div>
+
+          def self.mark_habit_not_done
+
+         Stat.all.each do |stat| 
+            @habit = Habit.where(id: stat.habit_id)
+
+               @stat = Stat.new 
+               @stat.done = false 
+               @stat.habit_id = @habit.id 
+               @stat.dates =  DateTime.now.strftime "%d/%m/%y"
+               @stat.save
+             
+         end 
+
+    end
+
+    <% d = 0 %>
+<% m = 0 %>
+<% y = 0 %>
+
+<% if @habit.frequency == "Daily" %>
+    <% Stat.all.each do |stat| %>
+      <% s=s+1 if stat.habit_id == @habit.id && stat.done == true %>
+      <% t=t+1 if stat.habit_id == @habit.id  %>
+    <% end %>
+<% end %>
+
+<% if @habit.frequency == "Weekly" %>
+    <% counter = 0 %>
+    <% Stat.all.each do |stat| %>
+      <% s=s+1 if stat.habit_id == @habit.id && stat.done == true %>
+      <% t=t+1 if stat.habit_id == @habit.id  %>
+    <% end %>
+<% end %>
+
+<% if @habit.frequency == "Monthly" %>
+    <% prev = "0" %>
+    <% Stat.all.each do |stat| %>
+      <% s=s+1 if ((stat.habit_id == @habit.id )&& (stat.dates.strftime("%m") != prev))%>
+      <% t=t+1 if (stat.dates.strftime("%m") != prev)%>
+    <% end %>
+<% end %>

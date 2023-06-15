@@ -24,49 +24,29 @@
             </div>
             </div>  
         </div> 
+        <div class="row justify-content-md-center mb-5 ">
+            <div class="dropdown">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Have you completed the task today?
+                </a>
 
-        <div class="dropdown">
-            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Have you completed the task today?
-            </a>
-
-            <div class="dropdown-menu center" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="<%= render 'yes', obj: @habit %>">Yes</a>
-                <a class="dropdown-item" href="<%= render 'no', obj: @habit %>">No</a>
-            </div>
+                <div class="dropdown-menu center" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" href="<%= render 'yes', obj: @habit %>">Yes</a>
+                    <a class="dropdown-item" href="<%= render 'no', obj: @habit %>">No</a>
+                </div>
+            </div> 
         </div>        
 </div>
 
 <% t = 0 %>
 <% s = 0 %>
-<% d = 0 %>
-<% m = 0 %>
-<% y = 0 %>
 
-<% if @habit.frequency == "Daily" %>
-    <% Stat.all.each do |stat| %>
-      <% s=s+1 if stat.habit_id == @habit.id && stat.done == true %>
-      <% t=t+1 if stat.habit_id == @habit.id  %>
-    <% end %>
-<% end %>
-
-<% if @habit.frequency == "Weekly" %>
-    <% counter = 0 %>
-    <% Stat.all.each do |stat| %>
-      <% s=s+1 if stat.habit_id == @habit.id && stat.done == true %>
-      <% t=t+1 if stat.habit_id == @habit.id  %>
-    <% end %>
-<% end %>
-
-<% if @habit.frequency == "Monthly" %>
-    <% prev = "0" %>
-    <% Stat.all.each do |stat| %>
-      <% s=s+1 if ((stat.habit_id == @habit.id )&& (stat.dates.strftime("%m") != prev))%>
-      <% t=t+1 if (stat.dates.strftime("%m") != prev)%>
-    <% end %>
-<% end %>
-
-<%= pie_chart(yes:s, no:t-s) %>
+<% Stat.where(habit_id: @habit.id).each do |stat|%>
+   <% t = t + 1 %>
+   <% s = s + 1 if stat.done == true %>
+<% end %>   
+<% t = t-s %>
+<%= pie_chart(yes:s, no:t) %>
 
 
 

@@ -20,7 +20,17 @@ set :output, "./log/cron.log"
 
 # Learn more: http://github.com/javan/whenever
 
-every 1.minutes do
-  runner 'Stat.mark_habit_not_done'
+every 1.day do
+  runner 'Stat.mark_habit_not_done_daily'
   runner "puts 'Hello World'"
 end
+
+every 1.month do
+  runner 'Stat.mark_habit_not_done_monthly'
+  runner "puts 'Hello World'"
+end
+
+every 1.year do
+  runner 'Stat.mark_habit_not_done_yearly'
+  runner "puts 'Hello World'"
+end  
