@@ -94,3 +94,7 @@ Things you may want to cover:
       <% t=t+1 if (stat.dates.strftime("%m") != prev)%>
     <% end %>
 <% end %>
+
+<div class="card-header font-italic">
+                   <%= link_to gravatar_for(@habit.user), user_path(@habit.user) %>
+                </div>

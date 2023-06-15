@@ -21,7 +21,7 @@ class Stat < ApplicationRecord
             end    
         end 
 
-   end
+    end
 
    def self.mark_habit_not_done_monthly
 
@@ -43,28 +43,28 @@ class Stat < ApplicationRecord
                 end    
         end 
 
-   end
+    end
 
    def self.mark_habit_not_done_yearly
 
-    Habit.where(frequency: "Yearly").each do |habit| 
-            count1 = 0
-            y = 1.year.ago.strftime "%y"
-            Stat.where(habit_id: habit.id).each do |stat|
-                if stat.dates.strftime "%y" == y
-                    count1 = 1
+        Habit.where(frequency: "Yearly").each do |habit| 
+                count1 = 0
+                y = 1.year.ago.strftime "%y"
+                Stat.where(habit_id: habit.id).each do |stat|
+                    if stat.dates.strftime "%y" == y
+                        count1 = 1
+                    end    
+                end  
+                
+                if count1 == 0
+                    @stat = Stat.new 
+                    @stat.done = false 
+                    @stat.habit_id = habit.id 
+                    @stat.dates =  1.year.ago.strftime "%d/%m/%y"
+                    @stat.save
                 end    
-            end  
-            
-            if count1 == 0
-                @stat = Stat.new 
-                @stat.done = false 
-                @stat.habit_id = habit.id 
-                @stat.dates =  1.year.ago.strftime "%d/%m/%y"
-                @stat.save
-            end    
-    end 
+        end 
 
-end
+    end
 
 end  

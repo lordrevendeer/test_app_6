@@ -27,7 +27,21 @@ class CategoriesController < ApplicationController
     @category.destroy
     flash[:notice] = "Category and all associated habits deleted"
     redirect_to categories_path
-    end 
+   end 
+
+   def edit
+    @category = Category.find(params[:id])
+   end 
+
+   def update
+    @category = Category.find(params[:id])
+    if @category.update(category_params)
+        flash[:notice] = "Your account information was successfully updated"
+        redirect_to @category
+    else
+        render 'edit'
+    end       
+end 
    private
 
    def category_params

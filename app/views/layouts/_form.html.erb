@@ -20,14 +20,14 @@
           <div class="form-group row">
             <%= f.label :days, class: "col-2 col-form-label text-light" %>
             <div class="col-10"> 
-                <%= f.text_field :days, class: "form-control shadow rounded", placeholder: "Number of days targeted" %>
+                <%= f.number_field :days, class: "form-control shadow rounded", placeholder: "Number of days targeted" %>
             </div>
           </div>
 
           <div class="form-group row">
             <%= f.label :frequency, class: "col-2 col-form-label text-light" %>
             <div class="col-10"> 
-                <%= f.select :frequency, ['Daily', 'Weekly','Monthly'], class: "form-control shadow rounded"%>
+                <%= f.select :frequency, ['Daily', 'Weekly','Monthly','Yearly'], class: "form-control shadow rounded"%>
             </div>
           </div>
 

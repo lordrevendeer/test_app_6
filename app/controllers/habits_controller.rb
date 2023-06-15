@@ -18,7 +18,7 @@ class HabitsController < ApplicationController
     def create
         @habit = Habit.new(habit_params)
         @habit.user = current_user
-        @habit.ydays = 1
+        @habit.ydays = 0
         @habit.ndays = 0
         if @habit.save
           flash[:notice] = "Habit displayed successfully"  

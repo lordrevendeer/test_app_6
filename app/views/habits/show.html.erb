@@ -1,17 +1,38 @@
-<h1 class="text-center">Showing habit details</h1>
+<% t = 0 %>
+<% s = 0 %>
 
-<h2 class="text-center mt-4"><%= @habit.title %></h2>
+<% Stat.where(habit_id: @habit.id).each do |stat|%>
+   <% t = t + 1 %>
+   <% s = s + 1 if stat.done == true %>
+<% end %> 
+<% p = 100*s/t %>  
+<% t = t-s %>
+
+<h1 class="text-center"><%= @habit.title %></h1>
 <div class="container">
+
+        <div class="row justify-content-md ">
+            <div class="dropdown">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Have you completed the task today?
+                </a>
+
+                <div class="dropdown-menu center" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" href="<%= render 'yes', obj: @habit %>">Yes</a>
+                    <a class="dropdown-item" href="<%= render 'no', obj: @habit %>">No</a>
+                </div>
+            </div> 
+        </div> 
         <div class="row justify-content-md-center">
             <div class="col-8 mt-4">
             <div class="card text-center shadow mb-5 bg-white rounded">
                 <div class="card-header font-italic">
-                   <%= @habit.user.username %>
-                   <%= link_to gravatar_for(@habit.user), user_path(@habit.user) %>
+                   <p class="card-text"><div class="card-text text-center"><%= simple_format(@habit.description) %></div></p>
                 </div>
                 <div class="card-body">
-                <p class="card-text"><div class="card-text text-center"><%= simple_format(@habit.description) %></div></p>
+                
                 <p class="card-text"><div class="card-text text-center">Frequency: <%= (@habit.frequency) %></div></p>
+                <p class="card-text"><div class="card-text text-center">Percentage completion: <%= p %>%</div></p>
                 <% if logged_in? && (@habit.user == current_user || current_user.admin?) %>
                 <%= link_to "Edit", edit_habit_path(@habit), class: "btn btn-outline-info" %>
                 <%= link_to "Delete", habit_path(@habit), class: "btn btn-outline-danger", method: :delete, data: {confirm: "Are you sure?"} %>
@@ -24,28 +45,9 @@
             </div>
             </div>  
         </div> 
-        <div class="row justify-content-md-center mb-5 ">
-            <div class="dropdown">
-                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Have you completed the task today?
-                </a>
-
-                <div class="dropdown-menu center" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="<%= render 'yes', obj: @habit %>">Yes</a>
-                    <a class="dropdown-item" href="<%= render 'no', obj: @habit %>">No</a>
-                </div>
-            </div> 
-        </div>        
+               
 </div>
 
-<% t = 0 %>
-<% s = 0 %>
-
-<% Stat.where(habit_id: @habit.id).each do |stat|%>
-   <% t = t + 1 %>
-   <% s = s + 1 if stat.done == true %>
-<% end %>   
-<% t = t-s %>
 <%= pie_chart(yes:s, no:t) %>
 
 
