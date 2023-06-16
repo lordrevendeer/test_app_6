@@ -13,7 +13,8 @@
                 <div class="card-body">
                   <h5 class="card-title"><%=link_to category.name, category_path(category), class: "text-success" %></h5>
                   <p> Number of habits: <%= Habit.where(category_id: category.id).count %> </p>
-                  <%= link_to "Edit", edit_category_path(category), class: "btn btn-outline-success" %>
+                  <%= link_to "View", category_path(category), class: "btn btn-outline-success" %>
+                  <%= link_to "Edit", edit_category_path(category), class: "btn btn-outline-danger" %>
                 </div>
 
                 

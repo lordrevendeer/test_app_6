@@ -98,3 +98,12 @@ Things you may want to cover:
 <div class="card-header font-italic">
                    <%= link_to gravatar_for(@habit.user), user_path(@habit.user) %>
                 </div>
+
+                                    <%= link_to x, render 'yes', class: "btn btn-primary", id: "completion" %>
+
+<div class="dropdown-menu center" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" href="<% render 'yes', obj: @habit %>">Yes</a>
+                    <a class="dropdown-item" href="<% render 'no', obj: @habit %>">No</a>
+                </div>
+
+                                        <a class="btn btn-secondary " href="<%= render 'yes', obj: @habit , id: "completion"%>"><%=x%></a>
