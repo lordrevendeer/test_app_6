@@ -22,15 +22,16 @@ set :output, "./log/cron.log"
 
 every 1.day do
   runner 'Stat.mark_habit_not_done_daily'
-  runner "puts 'Hello World'"
 end
+
+every 1.week do
+    runner 'Stat.mark_habit_not_done_weekly'
+  end
 
 every 1.month do
   runner 'Stat.mark_habit_not_done_monthly'
-  runner "puts 'Hello World'"
 end
 
 every 1.year do
   runner 'Stat.mark_habit_not_done_yearly'
-  runner "puts 'Hello World'"
 end  

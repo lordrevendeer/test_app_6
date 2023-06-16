@@ -1,15 +1,16 @@
 
 module StatsHelper
     def calculate_streak_for_habit(h_id)
-      stats = Stat.where(habit_id: h_id, done: true).order(:dates)
+      stats = Stat.where(habit_id: h_id, done: true)
   
       streak = 0
       current_streak = 0
       prev_date = nil
   
       stats.each do |stat|
-        date = stat.dates.to_date
-  
+        date = stat.dates
+
+
         if prev_date.nil? || date == prev_date + 1.day
           current_streak += 1
         else

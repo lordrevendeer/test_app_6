@@ -23,6 +23,28 @@ class Stat < ApplicationRecord
 
     end
 
+    def self.mark_habit_not_done_weekly
+        Habit.where(frequency: "Weekly").each do |habit|
+          count2 = 0
+          week_start = 1.week.ago.beginning_of_week
+          week_end = 1.week.ago.end_of_week
+      
+          Stat.where(habit_id: habit.id).each do |stat|
+            if stat.dates.between?(week_start, week_end)
+              count2 = 1
+            end
+          end
+      
+          if count2 == 0
+            stat = Stat.new
+            stat.done = false
+            stat.habit_id = habit.id
+            stat.dates = week_end
+            stat.save
+          end
+        end
+    end
+
    def self.mark_habit_not_done_monthly
 
         Habit.where(frequency: "Monthly").each do |habit| 

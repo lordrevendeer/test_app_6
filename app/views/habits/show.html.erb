@@ -7,6 +7,61 @@
 <% end %>
 <% t = t - s %>
 <h1 class="text-center"><%= @habit.title %></h1>
+<% if Stat.where(habit_id: @habit.id).count == @habit.days %>
+<div class="container">
+  <div class="row justify-content-between align-items-center">
+    <div class="col-4 mt-4 d-flex justify-content-end">
+      <div class="card bg-primary text-white text-center w-100">
+        <div class="card-body p-2">
+          <h5 class="card-title mb-0">Max Streak</h5>
+          <p class="card-text mb-0">
+            <%= calculate_streak_for_habit(@habit.id) %>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-8 mt-4">
+      <div class="row justify-content-between">
+        <div class="col-6">
+          <div class="completed-target">You have completed your target!</div>
+        </div>
+        <div class="col-6">
+          <div class="completion-percentage">Completion Percentage: <%= p %>%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mb-4">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-6 mt-4">
+      <div class="card text-center shadow bg-white rounded">
+        <div class="card-header font-italic">
+          <p class="card-text">
+            <div class="card-text text-center"><%= simple_format(@habit.description) %></div>
+          </p>
+        </div>
+        <div class="card-body">
+          <p class="card-text">
+            <div class="card-text text-center">Frequency: <%= @habit.frequency %></div><br>
+            <div class="card-text text-center">Target days: <%= @habit.days %></div>
+          </p>
+        </div>
+        <div class="card-footer text-muted">
+          <small>Created <%= time_ago_in_words(@habit.created_at) %> ago, edited <%= time_ago_in_words(@habit.updated_at) %> ago</small>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 mt-4">
+      <% if p != "NA" %>
+        <div class="text-center">
+          <%= pie_chart(yes: s, no: t) %>
+        </div>
+      <% end %>
+    </div>
+</div>
+<% else %>
 <div class="container mb-4">
   <div class="row justify-content-center align-items-center">
     <div class="col-3 mt-4 d-flex">
@@ -20,10 +75,10 @@
       </div>
     </div>
     <div class="col-3 mt-4 d-flex custom-card">
-      <div class="card text-center w-100">
+      <div class="card bg-primary text-white text-center w-100">
         <div class="card-body p-2">
-          <% x = Stat.find_by(done: true, habit_id: @habit.id, dates: DateTime.now.strftime("%d/%m/%y")).nil? ? "Habit completed" : "Habit done for today" %>
-          <%= link_to x, { controller: 'stats', action: 'update', remote: true, habit_id: @habit.id, done: "true", dates: DateTime.now.strftime("%d/%m/%y") }, class: "btn btn-primary", id: "completion" %>
+          <% x = Stat.find_by(done: true, habit_id: @habit.id, dates: DateTime.now.strftime("%d/%m/%y")).nil? ? "Habit done today" : "Well done!" %>
+          <%= link_to x, { controller: 'stats', action: 'update', remote: true, habit_id: @habit.id, done: true, dates: DateTime.now.strftime("%d/%m/%y") }, class: "btn btn-primary", id: "completion" %>
         </div>
       </div>
     </div>
@@ -44,39 +99,42 @@
 
 
 
-  <div class="row justify-content-center">
+  <div class="row justify-content-center ml-4">
     <div class="col-6">
       <div class="card text-center shadow mb-5 bg-white rounded">
         <div class="card text-center shadow mb-5 bg-white rounded">
-  <div class="card-header font-italic">
-    <p class="card-text">
-      <div class="card-text text-center"><%= simple_format(@habit.description) %></div>
-    </p>
-  </div>
-  <div class="card-body">
-    <p class="card-text">
-      <div class="card-text text-center">Frequency: <%= @habit.frequency %></div>
-    </p>
-    <p class="card-text">
-      <div class="card-text text-center">Percentage completion: <%= p %>%</div>
-    </p>
-    <% if logged_in? && (@habit.user == current_user || current_user.admin?) %>
-      <%= link_to "Edit", edit_habit_path(@habit), class: "btn btn-outline-info" %>
-      <%= link_to "Delete", habit_path(@habit), class: "btn btn-outline-danger", method: :delete, data: { confirm: "Are you sure?" } %>
-    <% end %>
-  </div>
-  <div class="card-footer text-muted">
-    <small>Created <%= time_ago_in_words(@habit.created_at) %> ago, edited <%= time_ago_in_words(@habit.updated_at) %> ago</small>
-  </div>
-</div>
+            <div class="card-header font-italic">
+                <p class="card-text">
+                <div class="card-text text-center"><%= simple_format(@habit.description) %></div>
+                </p>
+            </div>
+                <div class="card-body">
+                    <p class="card-text">
+                    <div class="card-text text-center">Frequency: <%= @habit.frequency %></div>
+                    </p>
+                    <p class="card-text">
+                    <div class="card-text text-center">Percentage completion: <%= p %>%</div>
+                    </p>
+                    <% if logged_in? && (@habit.user == current_user || current_user.admin?) %>
+                    <%= link_to "Edit", edit_habit_path(@habit), class: "btn btn-outline-info" %>
+                    <%= link_to "Delete", habit_path(@habit), class: "btn btn-outline-danger", method: :delete, data: { confirm: "Are you sure?" } %>
+                    <% end %>
+                </div>
+                <div class="card-footer text-muted">
+                    <small>Created <%= time_ago_in_words(@habit.created_at) %> ago, edited <%= time_ago_in_words(@habit.updated_at) %> ago</small>
+                </div>
+            </div>
 
       </div>
     </div>
     <div class="col-6">
       <% if p != "NA" %>
-        <%= pie_chart(yes: s, no: t) %>
+        <%= pie_chart(yes: Stat.where(habit_id: @habit.id, done: true).count, no: Stat.where(habit_id: @habit.id).count - Stat.where(habit_id: @habit.id, done: true).count) %>
+
       <% end %>
     </div>
   </div>
 </div>
+<% end %>
+
 
