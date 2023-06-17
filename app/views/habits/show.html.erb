@@ -77,8 +77,8 @@
     <div class="col-3 mt-4 d-flex custom-card">
       <div class="card bg-primary text-white text-center w-100">
         <div class="card-body p-2">
-          <% x = Stat.find_by(done: true, habit_id: @habit.id, dates: DateTime.now.strftime("%d/%m/%y")).nil? ? "Mark Done" : "Unmark" %>
-          <%= link_to x, { controller: 'stats', action: 'update', remote: true, habit_id: @habit.id, done: true, dates: DateTime.now.strftime("%d/%m/%y") }, class: "btn btn-primary", id: "completion" %>
+          <% x = Stat.find_by(done: true, habit_id: @habit.id, times: DateTime.now).nil? ? "Mark Done" : "Unmark" %>
+          <%= link_to x, { controller: 'stats', action: 'update', remote: true, habit_id: @habit.id, done: true, times: DateTime.now }, class: "btn btn-primary", id: "completion" %>
         </div>
       </div>
     </div>

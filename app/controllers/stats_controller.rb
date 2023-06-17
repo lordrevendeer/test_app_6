@@ -8,11 +8,11 @@ class StatsController < ActionController::Base
       end
 
       def update
-        if Stat.find_by(done: params[:done], habit_id: params[:habit_id], dates: params[:dates]).nil?
-            s = Stat.new(done: params[:done], habit_id: params[:habit_id], dates: params[:dates])
+        if Stat.find_by(done: params[:done], habit_id: params[:habit_id], times: params[:times]).nil?
+            s = Stat.new(done: params[:done], habit_id: params[:habit_id], times: params[:times])
             s.save
         else
-            Stat.where(done: params[:done], habit_id: params[:habit_id], dates: params[:dates]).destroy_all
+            Stat.where(done: params[:done], habit_id: params[:habit_id], times: params[:times]).destroy_all
         end
 
         respond_to do |format|
