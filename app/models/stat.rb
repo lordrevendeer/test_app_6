@@ -1,5 +1,5 @@
 class Stat < ApplicationRecord
-    validates_uniqueness_of :dates, :scope => [:habit_id,:done]   
+    validates_uniqueness_of :times, :scope => [:habit_id,:done]   
 
     def self.mark_habit_not_done_daily
 
