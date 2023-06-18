@@ -129,8 +129,11 @@
     </div>
     <div class="col-6">
       <% if Stat.where(habit_id: @habit.id).count != 0 %>
-        <%= pie_chart(yes: Stat.where(habit_id: @habit.id, done: true).count, no: calculate_missed(@habit.id)) %>
-
+        <% if Habit.where(id: @habit.id).first.frequency == "Daily" %>
+          <%= pie_chart(yes: Stat.where(habit_id: @habit.id, done: true).count, no: calculate_missed(@habit.id)) %>
+        <% else %>
+          <%= pie_chart(yes: count_yes(@habit.id), no: calculate_missed(@habit.id)) %>  
+        <% end %>
       <% end %>
     </div>
   </div>

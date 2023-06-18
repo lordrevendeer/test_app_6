@@ -1,30 +1,159 @@
 
 module StatsHelper
+    def count_yes(h_id)
+              if(Habit.where(id: h_id).first.frequency == "Weekly")
+                
+                stats = Stat.where(habit_id: h_id, done: true).order(:times)
+
+                weeks_with_true = 0
+                prev_time = nil
+
+                stats.each do |stat|
+                  time = stat.times.to_date
+
+                  if prev_time.nil? || time.year != prev_time.year || time.cweek != prev_time.cweek
+                    weeks_with_true += 1
+                  end
+
+                  prev_time = time
+                end
+
+                weeks_with_true
+
+          elsif(Habit.where(id: h_id).first.frequency == "Monthly")
+                  stats = Stat.where(habit_id: h_id, done: true).order(:times)
+
+                  months_with_true = 0
+                  prev_month = nil
+                  
+                  stats.each do |stat|
+                    month = stat.times.strftime('%Y-%m')
+                  
+                    if prev_month.nil? || month > prev_month
+                      months_with_true += 1
+                      prev_month = month
+                    end
+                  end
+                  
+                  months_with_true
+            
+            
+          else
+                stats = Stat.where(habit_id: h_id, done: true).order(:times)
+
+                years_with_true = 0
+                prev_year = nil
+                
+                stats.each do |stat|
+                  year = stat.times.year
+                
+                  if prev_year.nil? || year > prev_year
+                    years_with_true += 1
+                    prev_year = year
+                  end
+                end
+                
+                years_with_true
+            
+          end  
+
+    end
     def calculate_streak_for_habit(h_id)
-      stats = Stat.where(habit_id: h_id, done: true).order(:times)
-  
-      streak = 0
-      current_streak = 0
-      prev_date = nil
-  
-      stats.each do |stat|
-        date = stat.times
+      if(Habit.where(id: h_id).first.frequency == "Daily") 
+          stats = Stat.where(habit_id: h_id, done: true).order(:times)
+      
+          streak = 0
+          current_streak = 0
+          prev_date = nil
+      
+          stats.each do |stat|
+            date = stat.times
 
 
-        if prev_date.nil? || date == prev_date + 1.day
-          current_streak += 1
-        else
-          current_streak = 1
+            if prev_date.nil? || date == prev_date + 1.day
+              current_streak += 1
+            else
+              current_streak = 1
+            end
+      
+            streak = current_streak if current_streak > streak
+            prev_date = date
+          end
+      
+          streak
+      elsif(Habit.where(id: h_id).first.frequency == "Weekly")
+        stats = Stat.where(habit_id: h_id, done: true).order(:times)
+
+        streak = 0
+        current_streak = 0
+        prev_time = nil
+
+        stats.each do |stat|
+          time = stat.times.to_date
+
+          if prev_time.nil? || (time.year == prev_time.year && time.cweek == prev_time.cweek + 1) || (time.year == prev_time.year + 1 && time.cweek == 1 && prev_time.cweek == 52)
+            current_streak += 1
+          elsif time.year != prev_time.year || time.cweek != prev_time.cweek
+            streak = [streak, current_streak].max
+            current_streak = 1
+          end
+
+          prev_time = time
         end
+
+        streak = [streak, current_streak].max
+        streak
+      elsif(Habit.where(id: h_id).first.frequency == "Monthly")
+        stats = Stat.where(habit_id: h_id, done: true).order(:times)
+
+        streak = 0
+        current_streak = 0
+        prev_time = nil
+
+        stats.each do |stat|
+          time = stat.times
+
+          if prev_time.nil? || (time.year == prev_time.year && time.month == prev_time.month + 1) || (time.year == prev_time.year + 1 && time.month == 1 && prev_time.month == 12)
+            current_streak += 1
+          elsif time.year != prev_time.year || time.month != prev_time.month
+            streak = [streak, current_streak].max
+            current_streak = 1
+          end
+
+          prev_time = time
+        end
+
+        streak = [streak, current_streak].max
+        streak
   
-        streak = current_streak if current_streak > streak
-        prev_date = date
-      end
-  
-      streak
+      else
+        stats = Stat.where(habit_id: h_id, done: true).order(:times)
+
+        streak = 0
+        current_streak = 0
+        prev_year = nil
+        
+        stats.each do |stat|
+          year = stat.times.year
+        
+          if prev_year.nil? || year == prev_year + 1
+            current_streak += 1
+          elsif year != prev_year
+            streak = [streak, current_streak].max
+            current_streak = 1
+          end
+        
+          prev_year = year
+        end
+        
+        streak = [streak, current_streak].max
+        streak
+        
+        end      
     end
 
     def calculate_current_streak_for_habit(h_id)
+      if(Habit.where(id: h_id).first.frequency == "Daily") 
         stats = Stat.where(habit_id: h_id, done: true).order(:times)
       
         current_streak = 0
@@ -43,6 +172,72 @@ module StatsHelper
         end
       
         current_streak
+      elsif(Habit.where(id: h_id).first.frequency == "Weekly")
+        stats = Stat.where(habit_id: h_id, done: true).order(:times)
+
+        streak = 0
+        current_streak = 0
+        prev_time = nil
+
+        stats.each do |stat|
+          time = stat.times.to_date
+
+          if prev_time.nil? || (time.year == prev_time.year && time.cweek == prev_time.cweek + 1) || (time.year == prev_time.year + 1 && time.cweek == 1 && prev_time.cweek == 52)
+            current_streak += 1
+          elsif time.year != prev_time.year || time.cweek != prev_time.cweek
+            streak = [streak, current_streak].max
+            current_streak = 1
+          end
+
+          prev_time = time
+        end
+
+        current_streak
+
+      elsif(Habit.where(id: h_id).first.frequency == "Monthly")
+        stats = Stat.where(habit_id: h_id, done: true).order(:times)
+
+        streak = 0
+        current_streak = 0
+        prev_time = nil
+
+        stats.each do |stat|
+          time = stat.times
+
+          if prev_time.nil? || (time.year == prev_time.year && time.month == prev_time.month + 1) || (time.year == prev_time.year + 1 && time.month == 1 && prev_time.month == 12)
+            current_streak += 1
+          elsif time.year != prev_time.year || time.month != prev_time.month
+            streak = [streak, current_streak].max
+            current_streak = 1
+          end
+
+          prev_time = time
+        end
+
+        current_streak  
+      else
+        stats = Stat.where(habit_id: h_id, done: true).order(:times)
+
+        streak = 0
+        current_streak = 0
+        prev_year = nil
+
+        stats.each do |stat|
+          year = stat.times.year
+
+          if prev_year.nil? || year == prev_year + 1
+            current_streak += 1
+          elsif year != prev_year
+            streak = [streak, current_streak].max
+            current_streak = 1
+          end
+
+          prev_year = year
+        end
+
+        current_streak
+
+      end  
     end
 
     def calculate_missed(h_id)
@@ -92,23 +287,13 @@ module StatsHelper
 
         elsif(Habit.where(id: h_id).first.frequency == "Monthly")
               stats = Stat.where(habit_id: h_id, done: true).order(:times)
-              current_streak = 0
-              months_missed = 0
-              prev_time = nil
-
-              stats.each do |stat|
-                time = stat.times
-
-                if prev_time.nil? || time.month == prev_time.month + 1
-                  current_streak += 1
-                elsif time.month > prev_time.month + 1
-                  months_missed += time.month - prev_time.month - 1
-                end
-
-                prev_time = time
-              end
-
+              y1 = stats.first.times.year
+              y2 = stats.last.times.year
+              m1 = stats.first.times.month
+              m2 = stats.last.times.month
+              months_missed = ((y2 - y1) * 12 + m2 - m1 - 1)
               months_missed
+          
         else
               stats = Stat.where(habit_id: h_id, done: true).order(:times)
 
