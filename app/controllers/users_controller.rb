@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
     before_action :set_user, only: [:show, :edit, :update, :destroy]
-    before_action :require_user, only: [:edit, :update]
+    before_action :require_user, except: [:new, :create]
     before_action :require_same_user, only: [:edit, :update, :destroy]
 
     def new
@@ -20,7 +20,7 @@ class UsersController < ApplicationController
         if @user.save
             session[:user_id] = @user.id
             flash[:notice] = "Welcome to Habitrack #{@user.username}, you have successfully signed up"
-            redirect_to @user
+            redirect_to categories_path
         else
             render 'new'
         end
@@ -33,7 +33,7 @@ class UsersController < ApplicationController
         @user.destroy
         session[:user_id] = nil if @user == current_user
         flash[:notice] = "Account and all associated habits deleted"
-        redirect_to habits_path
+        redirect_to categories_path
     end    
     
     def update
