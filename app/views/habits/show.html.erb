@@ -7,7 +7,7 @@
 <% end %>
 <% t = t - s %>
 <h1 class="text-center"><%= @habit.title %></h1>
-<% if Stat.where(habit_id: @habit.id).count == @habit.days %>
+<% if calculate_missed(@habit.id) + count_yes(@habit.id) == @habit.days %>
 <div class="container">
   <div class="row justify-content-between align-items-center">
     <div class="col-4 mt-4 d-flex justify-content-end">

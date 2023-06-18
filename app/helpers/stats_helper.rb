@@ -247,7 +247,7 @@ module StatsHelper
 
             current_streak = 0
             days_missed = 0
-            prev_time = nil
+            prev_time = Habit.where(id: h_id).first.created_at - 1.day
 
             stats.each do |stat|
               time = stat.times
@@ -268,7 +268,7 @@ module StatsHelper
 
               current_streak = 0
               weeks_missed = 0
-              prev_time = nil
+              prev_time = Habit.where(id: h_id).first.created_at - 1.week
               
               stats.each do |stat|
                 time = stat.times
@@ -287,11 +287,12 @@ module StatsHelper
 
         elsif(Habit.where(id: h_id).first.frequency == "Monthly")
               stats = Stat.where(habit_id: h_id, done: true).order(:times)
-              y1 = stats.first.times.year
+              t = stats.first.times - 1.month
+              y1 = t.year
               y2 = stats.last.times.year
-              m1 = stats.first.times.month
+              m1 = t.month
               m2 = stats.last.times.month
-              months_missed = ((y2 - y1) * 12 + m2 - m1 - 1)
+              months_missed = ((y2 - y1) * 12 + m2 - m1 - 2) - count_yes(h_id)
               months_missed
           
         else
@@ -299,7 +300,7 @@ module StatsHelper
 
               current_streak = 0
               years_missed = 0
-              prev_time = nil
+              prev_time = Habit.where(id: h_id).first.created_at - 1.year
               
               stats.each do |stat|
                 time = stat.times
