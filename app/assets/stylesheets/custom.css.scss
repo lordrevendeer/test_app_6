@@ -2,7 +2,7 @@
 
 .navbar {
 
-    background-color: #ef1154 !important;
+    background-color: #050063 !important;
     
     }
 
@@ -23,6 +23,9 @@
     margin-top: 25px;
 }    
 
+.card {
+}
+
 .jumbotron {
     background-image: asset-url('jumbo-copy.jpg');
     background-position: center center;
@@ -39,7 +42,7 @@ body {
 
 #page-content {
   flex: 1 0 auto;
-  background: lightgray;
+  background: rgb(13, 220, 235);
 }
 
 #sticky-footer {
@@ -56,21 +59,21 @@ body {
     border-radius: 5px;
   }
   .flickr_pagination .disabled {
-    color: #aaaaaa; }
+    color: #050063; }
   .flickr_pagination .current {
     font-style: normal;
     font-weight: bold;
-    color: #ff0084; }
+    color: #100f0f; }
   .flickr_pagination a {
-    border: 1px solid whitesmoke;
-    color: whitesmoke;
+    border: 1px solid #050063;
+    color: #050063;
     text-decoration: none; }
     .flickr_pagination a:hover, .flickr_pagination a:focus {
-      border-color: grey;
+      border-color: #050063;
       background: whitesmoke;
-      color: grey; }
+      color: #050063; }
   .flickr_pagination .page_info {
-    color: #aaaaaa;
+    color: #050063;
     padding-top: 0.8em; }
   .flickr_pagination .previous_page, .flickr_pagination .next_page {
     border-width: 2px; }
@@ -112,7 +115,7 @@ body {
     }
     
     .table th {
-      background-color: #13e8e4;
+      background-color: #b4b8bf;
       font-weight: bold;
     }
     
@@ -130,23 +133,24 @@ body {
     }
     
     .btn-outline-success {
-      color: #28a745;
-      border-color: #28a745;
+      color: #0a1dc9;
+      border-color: #0a1dc9;
     }
     
     .btn-outline-success:hover {
-      background-color: #28a745;
+      background-color: #0a1dc9;
       color: #fff;
     }
     
     .btn-outline-info {
-      color: #17a2b8;
-      border-color: #17a2b8;
+      color: #080807;
+      border-color: #141311;
+      background-color: #ffe62d;
     }
     
     .btn-outline-info:hover {
-      background-color: #17a2b8;
-      color: #fff;
+      background-color: #ffe62d;
+      color: #0b0a0a;
     }
     
     .btn-outline-danger {
