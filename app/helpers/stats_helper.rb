@@ -253,7 +253,7 @@ module StatsHelper
 
             current_streak = 0
             days_missed = 0
-            prev_time = Habit.where(id: h_id).first.created_at - 1.day
+            prev_time = nil
 
             stats.each do |stat|
               time = stat.times

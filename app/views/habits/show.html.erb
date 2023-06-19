@@ -79,14 +79,13 @@
         </div>
       </div>
     </div>
-    <div class="col-3 mt-4 d-flex custom-card">
-      <div class="card bg-primary text-white text-center w-100">
-        <div class="card-body p-2">
-          <% x = Stat.find_by(done: true, habit_id: @habit.id, times: DateTime.now).nil? ? "Mark Done" : "Unmark" %>
-          <%= link_to x, { controller: 'stats', action: 'update', remote: true, habit_id: @habit.id, done: true, times: DateTime.now }, class: "btn btn-primary", id: "completion" %>
+    
+        <div>
+          <% x = !Stat.where(done: true, habit_id: @habit.id, times: DateTime.now.to_date ..DateTime.now.to_date + 1.day).exists? ? "Mark Done" : "Unmark" %>
+          <% y = !Stat.where(done: true, habit_id: @habit.id, times: DateTime.now.to_date ..DateTime.now.to_date + 1.day).exists? ? "btn-success" : "btn-dark"%>
+          <%= link_to x, { controller: 'stats', action: 'update', remote: true, habit_id: @habit.id, done: true, times: DateTime.now,x1: x }, class: "btn #{y}", id: "completion" %>
         </div>
-      </div>
-    </div>
+      
     <div class="col-3 mt-4 d-flex">
       <div class="card bg-primary text-white text-center w-100">
         <div class="card-body p-2">

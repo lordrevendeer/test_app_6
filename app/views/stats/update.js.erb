@@ -2,7 +2,11 @@ var followButton = document.getElementById('completion');
 
 if (followButton.innerText == 'Mark Done') {
   followButton.innerText = 'Unmark';
+  followButton.classList.remove('btn-success');
+  followButton.classList.add('btn-dark');
 } 
  else {
   followButton.innerText = 'Mark Done';
+  followButton.classList.remove('btn-dark');
+  followButton.classList.add('btn-success');
 }

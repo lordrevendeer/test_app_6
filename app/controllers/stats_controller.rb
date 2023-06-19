@@ -8,11 +8,11 @@ include Groupdate
       end
 
       def update
-        if Stat.find_by(done: params[:done], habit_id: params[:habit_id], times: params[:times]).nil?
-            s = Stat.new(done: params[:done], habit_id: params[:habit_id], times: params[:times])
+        if params[:x1]=='Mark Done' && !Stat.where(done: params[:done], habit_id: params[:habit_id], times: DateTime.now.to_date ..DateTime.now.to_date + 1.day).exists?
+            s = Stat.new(done: params[:done], habit_id: params[:habit_id], times: DateTime.now.to_date)
             s.save
-        else
-            Stat.where(done: params[:done], habit_id: params[:habit_id], times: params[:times]).destroy_all
+        elsif params[:x1]=='Unmark' && Stat.where(done: params[:done], habit_id: params[:habit_id], times: DateTime.now.to_date ..DateTime.now.to_date + 1.day).exists?
+            Stat.where(done: params[:done], habit_id: params[:habit_id], times: DateTime.now.to_date ..DateTime.now.to_date + 1.day).destroy_all
         end
 
         respond_to do |format|

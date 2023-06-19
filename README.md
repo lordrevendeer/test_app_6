@@ -317,4 +317,8 @@ module StatsHelper
             current_streak
           end
       end
- end    
+ end
+
+
+ params[:x1]=='Mark Done' && 
+ if params[:x1]=='Unmark' && !    
