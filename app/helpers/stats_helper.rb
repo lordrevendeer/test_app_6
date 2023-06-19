@@ -306,7 +306,7 @@ module StatsHelper
               
               m1 = t.month
               
-              months_missed = ((y2 - y1) * 12 + m2 - m1 - 2) - count_yes(h_id)
+              months_missed = ((y2 - y1) * 12 + m2 - m1 ) - count_yes(h_id)
               months_missed
           
         else
