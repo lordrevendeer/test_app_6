@@ -57,9 +57,9 @@ private
    end 
 
    def require_same_user
-    if current_user != @habit.user && !current_user.admin?
+    if current_user != @habit.user 
       flash[:alert] = "You can only edit or delete your own habit"
-      redirect_to @habit      
+      redirect_to habits_path      
     end
    end 
     
