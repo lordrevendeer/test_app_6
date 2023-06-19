@@ -20,18 +20,8 @@ set :output, "./log/cron.log"
 
 # Learn more: http://github.com/javan/whenever
 
-every 1.day do
-  runner 'Stat.mark_habit_not_done_daily'
+every 1.day, at: '1:32 am' do
+  runner 'User.notif'
 end
 
-every 1.week do
-    runner 'Stat.mark_habit_not_done_weekly'
-  end
-
-every 1.month do
-  runner 'Stat.mark_habit_not_done_monthly'
-end
-
-every 1.year do
-  runner 'Stat.mark_habit_not_done_yearly'
-end  
+ 

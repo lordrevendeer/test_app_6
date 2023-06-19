@@ -1,5 +1,5 @@
 class StatsController < ActionController::Base
-
+include Groupdate
       def new
       end
 

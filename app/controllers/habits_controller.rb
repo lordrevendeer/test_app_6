@@ -3,12 +3,11 @@ class HabitsController < ApplicationController
     before_action :set_habit, only:[:show, :edit, :update, :destroy]
     before_action :require_user
     before_action :require_same_user, only: [:show, :edit, :update, :destroy]
-
     def show
     end
 
     def index
-        @habits = Habit.paginate(page: params[:page], per_page: 5)
+        @habits = Habit.paginate(page: params[:page], per_page: 6)
     end    
 
     def new

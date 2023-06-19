@@ -87,6 +87,8 @@ GEM
       rake
     globalid (1.1.0)
       activesupport (>= 5.0)
+    groupdate (6.2.1)
+      activesupport (>= 5.2)
     http (5.1.1)
       addressable (~> 2.8)
       http-cookie (~> 1.0)
@@ -258,6 +260,7 @@ DEPENDENCIES
   byebug
   capybara (>= 2.15)
   chartkick (~> 3.3.1)
+  groupdate
   jbuilder (~> 2.7)
   listen (>= 3.0.5, < 3.2)
   noticed (~> 1.6)
