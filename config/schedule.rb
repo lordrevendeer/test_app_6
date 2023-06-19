@@ -20,7 +20,7 @@ set :output, "./log/cron.log"
 
 # Learn more: http://github.com/javan/whenever
 
-every 1.day, at: '1:32 am' do
+every 1.day, at: '2:13 pm' do
   runner 'User.notif'
 end
 

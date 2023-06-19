@@ -5,33 +5,39 @@
   </div>
 <% end %>
 <% @habits = Habit.where(category_id: @category.id) %>
-
-<div class="container">
-  <table class="table table-bordered mt-4">
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Frequency</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @habits.each do |habit| %>
-        <% if logged_in? && (habit.user == current_user || current_user.admin?) %>
+  <% if @habits.count != 0 %>
+    <div class="container">
+      <table class="table table-bordered mt-4">
+        <thead>
           <tr>
-            <td><%= link_to habit.title, habit_path(habit), class: "text-success" %></td>
-            <td><%= habit.frequency %></td>
-            <td>
-              <%= link_to "View", habit_path(habit), class: "btn btn-outline-success btn-sm" %>
-              <%= link_to "Edit", edit_habit_path(habit), class: "btn btn-outline-info btn-sm" %>
-              <%= link_to "Delete", habit_path(habit), class: "btn btn-outline-danger btn-sm", method: :delete, data: { confirm: "Are you sure?" } %>
-            </td>
+            <th>Title</th>
+            <th>Frequency</th>
+            <th>Actions</th>
           </tr>
-        <% end %>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+        </thead>
+        <tbody>
+          <% @habits.each do |habit| %>
+            <% if logged_in? && (habit.user == current_user || current_user.admin?) %>
+              <tr>
+                <td><%= link_to habit.title, habit_path(habit), class: "text-success" %></td>
+                <td><%= habit.frequency %></td>
+                <td>
+                  <%= link_to "View", habit_path(habit), class: "btn btn-outline-success btn-sm" %>
+                  <%= link_to "Edit", edit_habit_path(habit), class: "btn btn-outline-info btn-sm" %>
+                  <%= link_to "Delete", habit_path(habit), class: "btn btn-outline-danger btn-sm", method: :delete, data: { confirm: "Are you sure?" } %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+<% else %>
+    <h2 class="text-center mt-4"> Please create a habit first! </h2>
+    <div class="container d-flex justify-content-center align-items-center">
+      <%= image_tag("error.jpeg", alt: "Image", class: "card-img-right", size: "400x400") %>
+    </div>
+<% end %>   
 
 
 

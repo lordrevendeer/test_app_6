@@ -1,7 +1,12 @@
 
 module StatsHelper
     def count_yes(h_id)
-              if(Habit.where(id: h_id).first.frequency == "Weekly")
+            if(Habit.where(id: h_id).first.frequency == "Dailly")
+                      
+              yes = Stat.where(habit_id: h_id, done: true).count
+
+              yes
+            elsif(Habit.where(id: h_id).first.frequency == "Weekly")
                 
                 stats = Stat.where(habit_id: h_id, done: true).order(:times)
 
@@ -67,7 +72,7 @@ module StatsHelper
           prev_date = nil
       
           stats.each do |stat|
-            date = stat.times
+            date = stat.times.to_date
 
 
             if prev_date.nil? || date == prev_date + 1.day
@@ -160,11 +165,12 @@ module StatsHelper
         prev_date = nil
       
         stats.each do |stat|
-          date = stat.times
+          date = stat.times.to_date
       
           if prev_date.nil? || date == prev_date + 1.day
             current_streak += 1
           else
+            current_streak = 1
             break
           end
       
@@ -287,11 +293,19 @@ module StatsHelper
 
         elsif(Habit.where(id: h_id).first.frequency == "Monthly")
               stats = Stat.where(habit_id: h_id, done: true).order(:times)
+              if stats.count == 0 
+              t = Habit.where(id: h_id).first.created_at - 1.month
+              y2 = DateTime.now.year
+              m2 = DateTime.now.month
+              else
               t = stats.first.times - 1.month
-              y1 = t.year
               y2 = stats.last.times.year
-              m1 = t.month
               m2 = stats.last.times.month
+              end
+              y1 = t.year
+              
+              m1 = t.month
+              
               months_missed = ((y2 - y1) * 12 + m2 - m1 - 2) - count_yes(h_id)
               months_missed
           

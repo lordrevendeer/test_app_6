@@ -13,7 +13,7 @@ class User < ApplicationRecord
   
     def self.notif
       User.all.each do |user|
-        UsersMailer.with(email: user.email).reminder_notification.deliver_now
+        UsersMailer.reminder_notification(user.email).deliver_now
       end
     end
   end
