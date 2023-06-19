@@ -20,8 +20,8 @@ set :output, "./log/cron.log"
 
 # Learn more: http://github.com/javan/whenever
 
-every 1.day, at: '2:13 pm' do
-  runner 'User.notif'
+every 1.day, at: '5:00 pm' do
+  rake "hello_world:enable_for_all_programs"
 end
 
  

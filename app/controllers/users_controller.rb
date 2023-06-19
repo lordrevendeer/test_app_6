@@ -1,3 +1,5 @@
+require 'app/mailers/users_mailer'
+
 class UsersController < ApplicationController
     before_action :set_user, only: [:show, :edit, :update, :destroy]
     before_action :require_user, except: [:new, :create]
@@ -59,5 +61,12 @@ class UsersController < ApplicationController
           flash[:alert] = "You can only edit or delete your own account"
           redirect_to @user     
         end
-    end 
+    end
+
+    def self.notif
+        include UsersMailer 
+        User.all.each do |user|
+          UsersMailer.reminder_notification(user.email).deliver_now
+        end
+    end
 end        
