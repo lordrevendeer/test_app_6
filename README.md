@@ -321,4 +321,9 @@ module StatsHelper
 
 
  params[:x1]=='Mark Done' && 
- if params[:x1]=='Unmark' && !    
+ if params[:x1]=='Unmark' && !
+
+ <%= line_chart Habit.group_by_month(:created_at).count %>   
+
+ <%= line_chart Habit.group_by_month(:created_at).count %>
+<h4 class="text-center mt-4">Habits created per month </h1> 

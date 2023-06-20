@@ -2,11 +2,12 @@
   <div class="row justify-content-md-center">
     <% @habits.where(user_id: current_user.id).each do |habit| %>
       <% if logged_in? && (habit.user == current_user)%>
+       <% x = calculate_missed(habit.id) + count_yes(habit.id) == habit.days ? "card-header1" : "card-header2" %>
         <div class="col-4 mt-4">
           <div class="card text-center shadow mb-5 bg-white rounded">
-            <div class="card-header font-italic"></div>
+            <div class="<%= x %> font-italic"><h5 class="card-title text-dark mt-2"><%=link_to habit.title, habit_path(habit), class: "text-dark mt-4" %></h5></div>
+               
             <div class="card-body">
-              <h5 class="card-title"><%=link_to habit.title, habit_path(habit), class: "text-success" %></h5>
               <p class="card-text">
                  Frequency: <%= habit.frequency %> <br>
                  Category: <%= Category.where(id: habit.category_id).first.name %>  

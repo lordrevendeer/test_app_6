@@ -10,5 +10,4 @@
     <%= will_paginate @habits.where(user_id: current_user.id), :container => false %>
 </div>
 
-<%= line_chart Habit.group_by_month(:created_at).count %>
-<h4 class="text-center mt-4">Habits created per month </h1>
+
