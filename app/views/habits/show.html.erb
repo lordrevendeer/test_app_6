@@ -11,7 +11,23 @@
   <% p = 100 * s / t %>
 <% end %>
 <% t = t - s %>
-<h1 class="text-center"><%= @habit.title %></h1>
+<div class="row justify-content-center align-items-center">
+  <div class="col-5">
+    <div class="text-left ml-5">
+      <% x = !Stat.where(done: true, habit_id: @habit.id, times: DateTime.now.to_date ..DateTime.now.to_date + 1.day).exists? ? "Mark Done" : "Unmark" %>
+      <% y = !Stat.where(done: true, habit_id: @habit.id, times: DateTime.now.to_date ..DateTime.now.to_date + 1.day).exists? ? "btn-success" : "btn-dark"%>
+      <%= link_to x, { controller: 'stats', action: 'update', remote: true, habit_id: @habit.id, done: true, times: DateTime.now,x1: x }, class: "btn #{y}", id: "completion" %>
+    </div>
+  </div>
+  <div class="col-7">
+    <div class="text-left">
+      <h1><%= @habit.title %></h1>
+    </div>
+  </div>
+</div>
+
+
+
 <% if calculate_missed(@habit.id) + count_yes(@habit.id) == @habit.days %>
 <div class="container">
   <div class="row justify-content-between align-items-center">
@@ -51,6 +67,7 @@
           <p class="card-text">
             <div class="card-text text-center">Frequency: <%= @habit.frequency %></div><br>
             <div class="card-text text-center">Target days: <%= @habit.days %></div>
+            <div class="card-text text-center">Category: <%= Category.where(id: @habit.category_id).first.name %></div>
           </p>
         </div>
         <div class="card-footer text-muted">
@@ -80,11 +97,7 @@
       </div>
     </div>
     
-        <div>
-          <% x = !Stat.where(done: true, habit_id: @habit.id, times: DateTime.now.to_date ..DateTime.now.to_date + 1.day).exists? ? "Mark Done" : "Unmark" %>
-          <% y = !Stat.where(done: true, habit_id: @habit.id, times: DateTime.now.to_date ..DateTime.now.to_date + 1.day).exists? ? "btn-success" : "btn-dark"%>
-          <%= link_to x, { controller: 'stats', action: 'update', remote: true, habit_id: @habit.id, done: true, times: DateTime.now,x1: x }, class: "btn #{y}", id: "completion" %>
-        </div>
+        
       
     <div class="col-3 mt-4 d-flex">
       <div class="card bg-primary text-white text-center w-100">
@@ -114,9 +127,8 @@
             </div>
                 <div class="card-body">
                     <p class="card-text">
+                    <div class="card-text text-center">Category: <%= Category.where(id: @habit.category_id).first.name %></div>
                     <div class="card-text text-center">Frequency: <%= @habit.frequency %></div>
-                    </p>
-                    <p class="card-text">
                     <div class="card-text text-center">Percentage completion: <%= p %>%</div>
                     </p>
                     <% if logged_in? && (@habit.user == current_user || current_user.admin?) %>

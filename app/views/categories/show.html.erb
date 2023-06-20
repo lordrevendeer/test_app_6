@@ -1,10 +1,10 @@
 <h1 class="text-center mt-4">Category: <%= @category.name %></h1>
-<% if logged_in? && (current_user.admin?) %>
+<% if logged_in? && current_user.admin? %>
   <div class="row justify-content-md-center">
    <%= link_to "Edit category", edit_category_path(@category), class: "btn btn-outline-success" %>
   </div>
 <% end %>
-<% @habits = Habit.where(category_id: @category.id) %>
+<% @habits = Habit.where(category_id: @category.id,user: current_user) %>
   <% if @habits.count != 0 %>
     <div class="container">
       <table class="table table-bordered mt-4">

@@ -7,7 +7,10 @@
             <div class="card-header font-italic"></div>
             <div class="card-body">
               <h5 class="card-title"><%=link_to habit.title, habit_path(habit), class: "text-success" %></h5>
-              <p class="card-text">Frequency: <%= habit.frequency %></p>
+              <p class="card-text">
+                 Frequency: <%= habit.frequency %> <br>
+                 Category: <%= Category.where(id: habit.category_id).first.name %>  
+              </p>
               <%= link_to "View", habit_path(habit), class: "btn btn-outline-success" %>
               <%= link_to "Edit", edit_habit_path(habit), class: "btn btn-outline-info" %>
               <%= link_to "Delete", habit_path(habit), class: "btn btn-outline-danger", method: :delete, data: {confirm: "Are you sure?"} %>

@@ -49,8 +49,13 @@ class HabitsController < ApplicationController
 
 private
    def set_habit
-      @habit = Habit.find(params[:id])
-   end   
+    @habit = Habit.find_by(id: params[:id])
+    unless @habit
+      # Handle the case when the Habit record doesn't exist
+      # For example, you can redirect to an error page or show a flash message
+      redirect_to root_path, alert: "Habit not found."
+    end
+  end  
    
    def habit_params
      params.require(:habit).permit(:title, :description, :days,  :frequency, :category_id)

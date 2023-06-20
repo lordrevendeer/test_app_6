@@ -10,11 +10,21 @@ class User < ApplicationRecord
                       uniqueness: { case_sensitive: false },
                       format: { with: VALID_EMAIL_REGEX }
     has_secure_password
-  
+
+    validates :password, confirmation: true
+    validates :password_confirmation, presence: true, if: :password_required?
+
     def self.notif
       User.all.each do |user|
         UsersMailer.reminder_notification(user.email).deliver_now
       end
     end
+
+    private
+
+    def password_required?
+      password.present? || password_confirmation.present?
+    end
+
   end
       
