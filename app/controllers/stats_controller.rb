@@ -8,15 +8,39 @@ include Groupdate
       end
 
       def update
-        if params[:x1]=='Mark Done' && !Stat.where(done: params[:done], habit_id: params[:habit_id], times: DateTime.now.to_date ..DateTime.now.to_date + 1.day).exists?
+        if params[:x1]=='Mark Done'
+          if !Stat.where(done: params[:done], habit_id: params[:habit_id], times: DateTime.now.to_date ..DateTime.now.to_date + 1.day).exists?
             s = Stat.new(done: params[:done], habit_id: params[:habit_id], times: DateTime.now.to_date)
             s.save
-        elsif params[:x1]=='Unmark' && Stat.where(done: params[:done], habit_id: params[:habit_id], times: DateTime.now.to_date ..DateTime.now.to_date + 1.day).exists?
+            respond_to do |format|
+              format.js do
+                render "stats/update.js.erb"
+              end
+            end
+          else
+            flash[:notice] = "Already Marked Done" 
+            respond_to do |format|
+              format.js do
+                render "stats/reload.js.erb"
+              end
+            end
+          end
+        elsif params[:x1]=='Unmark'
+          if Stat.where(done: params[:done], habit_id: params[:habit_id], times: DateTime.now.to_date ..DateTime.now.to_date + 1.day).exists?
             Stat.where(done: params[:done], habit_id: params[:habit_id], times: DateTime.now.to_date ..DateTime.now.to_date + 1.day).destroy_all
-        end
-
-        respond_to do |format|
-            format.js  # <-- will render `app/views/habits/update.js.erb`
+            respond_to do |format|
+              format.js do
+                render "stats/update.js.erb"
+              end
+            end
+          else 
+            flash[:notice] = "Already Unmarked" 
+            respond_to do |format|
+              format.js do
+                render "stats/reload.js.erb"
+              end
+            end 
+          end  
         end
       end
 

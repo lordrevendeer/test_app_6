@@ -16,7 +16,7 @@
     <div class="text-left ml-5">
       <% x = !Stat.where(done: true, habit_id: @habit.id, times: DateTime.now.to_date ..DateTime.now.to_date + 1.day).exists? ? "Mark Done" : "Unmark" %>
       <% y = !Stat.where(done: true, habit_id: @habit.id, times: DateTime.now.to_date ..DateTime.now.to_date + 1.day).exists? ? "btn-success" : "btn-dark"%>
-      <%= link_to x, { controller: 'stats', action: 'update', remote: true, habit_id: @habit.id, done: true, times: DateTime.now,x1: x }, class: "btn #{y}", id: "completion" %>
+      <%= link_to x, { controller: 'stats', action: 'update', remote: true, habit_id: @habit.id, done: true, x1: x }, class: "btn #{y}", id: "completion" %>
     </div>
   </div>
   <div class="col-7">
