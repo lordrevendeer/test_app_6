@@ -39,7 +39,7 @@ include Groupdate
               format.js do
                 render "stats/reload.js.erb"
               end
-            end 
+            end
           end  
         end
       end

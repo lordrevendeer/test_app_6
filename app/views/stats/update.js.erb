@@ -1,12 +1,19 @@
 var followButton = document.getElementById('completion');
+var href = followButton.href;
+var url = new URL(href);
 
 if (followButton.innerText == 'Mark Done') {
+  url.searchParams.set('x1', 'Unmark');
   followButton.innerText = 'Unmark';
   followButton.classList.remove('btn-success');
   followButton.classList.add('btn-dark');
 } 
  else {
+  url.searchParams.set('x1', 'Mark Done');
+  followButton.x2 = "Mark Done";
   followButton.innerText = 'Mark Done';
   followButton.classList.remove('btn-dark');
   followButton.classList.add('btn-success');
 }
+
+followButton.href = url.toString();
