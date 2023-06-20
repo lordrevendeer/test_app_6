@@ -7,7 +7,8 @@ class HabitsController < ApplicationController
     end
 
     def index
-        @habits = Habit.paginate(page: params[:page], per_page: 6)
+        @habits = Habit.where(user_id: current_user.id).paginate(page: params[:page], per_page: 3)
+        @habit = Habit.where(user_id: current_user.id)
     end    
 
     def new
