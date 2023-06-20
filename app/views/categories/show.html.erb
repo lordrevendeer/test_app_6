@@ -1,4 +1,4 @@
-<h1 class="text-center mt-4">Category: <%= @category.name %></h1>
+<h1 class="text-center mt-4" style="font-family: 'Times New Roman', Times, serif;">Category: <%= @category.name %></h1>
 <% if logged_in? && current_user.admin? %>
   <div class="row justify-content-md-center">
    <%= link_to "Edit category", edit_category_path(@category), class: "btn btn-outline-success" %>
@@ -33,7 +33,7 @@
       </table>
     </div>
 <% else %>
-    <h2 class="text-center mt-4"> Please create a habit first! </h2>
+    <h2 class="text-center mt-4" style="font-family: 'Times New Roman', Times, serif;"> Please create a habit first! </h2>
     <div class="container d-flex justify-content-center align-items-center">
       <%= image_tag("error.jpeg", alt: "Image", class: "card-img-right", size: "400x400") %>
     </div>

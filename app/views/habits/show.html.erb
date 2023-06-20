@@ -21,7 +21,7 @@
   </div>
   <div class="col-7">
     <div class="text-left">
-      <h1><%= @habit.title %></h1>
+      <h1 style="font-family: 'Times New Roman', Times, serif;"><%= @habit.title %></h1>
     </div>
   </div>
 </div>
@@ -34,7 +34,7 @@
     <div class="col-4 mt-4 d-flex justify-content-end">
       <div class="card bg-primary text-white text-center w-100">
         <div class="card-body p-2">
-          <h5 class="card-title mb-0">Max Streak</h5>
+          <h5 class="card-title mb-0" style="font-family: 'Times New Roman', Times, serif;">Max Streak</h5>
           <p class="card-text mb-0">
             <%= calculate_streak_for_habit(@habit.id) %>
           </p>
@@ -89,7 +89,7 @@
     <div class="col-3 mt-4 d-flex">
       <div class="card bg-primary text-white text-center w-100">
         <div class="card-body p-2">
-          <h5 class="card-title mb-0">Max Streak</h5>
+          <h5 class="card-title mb-0" style="font-family: 'Times New Roman', Times, serif;">Max Streak</h5>
           <p class="card-text mb-0">
             <%= calculate_streak_for_habit(@habit.id) %>
           </p>
@@ -102,7 +102,7 @@
     <div class="col-3 mt-4 d-flex">
       <div class="card bg-primary text-white text-center w-100">
         <div class="card-body p-2">
-          <h5 class="card-title mb-0">Current Streak</h5>
+          <h5 class="card-title mb-0" style="font-family: 'Times New Roman', Times, serif;">Current Streak</h5>
           <p class="card-text mb-0">
             <%= calculate_current_streak_for_habit(@habit.id) %>
           </p>

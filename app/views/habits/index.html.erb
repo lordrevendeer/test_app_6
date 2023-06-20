@@ -1,4 +1,5 @@
-<h1 class="text-center mt-4">Listing my habits </h1>
+<% if @habit.count != 0 %>
+<h1 class="text-center mt-4 font-bedrock" style="font-family: 'Times New Roman', Times, serif;">Listing my habits </h1>
 
 <div class="flickr_pagination">
     <%= will_paginate @habits.where(user_id: current_user.id), :container => false %>
@@ -15,6 +16,14 @@
 <div class="container">
     <% habit_ids = @habit.pluck(:id) %>
     <%= line_chart Stat.where(habit_id: habit_ids).group_by_month(:times).count , xtitle: "Month", ytitle: "Completed times"%>
-</div>    
+</div>   
+<% else %>
+  <div>
+        <h2 class="text-center mt-4 " style="font-family: 'Times New Roman', Times, serif;"> Please create a habit! </h2>
+        <div class="container d-flex justify-content-center align-items-center">
+        <%= image_tag("error.jpeg", alt: "Image", class: "card-img-right", size: "400x400") %>
+        </div>
+  </div>    
+<% end %> 
 
 

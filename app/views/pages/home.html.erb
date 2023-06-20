@@ -4,10 +4,15 @@
 
 <div class="container" id="home-container">
     <div class="jumbotron text-center text-#050063">
-        <h1 class="display-4">Habitrack!</h1>
-        <p class="lead">An application for developing new habits</p>
+        <h1 class="display-4" style="font-family: 'Times New Roman', Times, serif;">Habitrack!</h1>
+        <p class="lead" style="font-family: 'Times New Roman', Times, serif;">An application for developing new habits</p>
         <hr class="my-4">
-        <%= link_to "Sign Up!",signup_path, class: "btn btn-success btn-lg" %>
+        <% if !logged_in? %>
+            <%= link_to " Login! ",login_path, class: "btn btn-primary btn-lg" %>
+            <%= link_to "Sign Up!",signup_path, class: "btn btn-success btn-lg" %>
+        <% else %>
+            <%= link_to " My Habits ",habits_path, class: "btn btn-primary btn-lg" %>
+        <% end %>    
     </div>
 </div> 
 
