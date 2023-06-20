@@ -8,6 +8,13 @@
 
 <div class="flickr_pagination mb-4">
     <%= will_paginate @habits.where(user_id: current_user.id), :container => false %>
+
+        
 </div>
+
+<div class="container">
+    <% habit_ids = @habits.pluck(:id) %>
+    <%= line_chart Stat.where(habit_id: habit_ids).group_by_month(:times).count , xtitle: "Month", ytitle: "Completed times"%>
+</div>    
 
 
