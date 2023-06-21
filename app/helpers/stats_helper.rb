@@ -219,7 +219,7 @@ module StatsHelper
 
           prev_time = time
         end
-
+       
         current_streak  
       else
         stats = Stat.where(habit_id: h_id, done: true).order(:times)
@@ -299,8 +299,9 @@ module StatsHelper
               m2 = DateTime.now.month
               else
               t = stats.first.times - 1.month
-              y2 = stats.last.times.year
-              m2 = stats.last.times.month
+              t1 = [stats.last.times, DateTime.now].max
+              y2 = t1.year
+              m2 = t1.month
               end
               y1 = t.year
               
