@@ -20,7 +20,7 @@ set :output, "./log/cron.log"
 
 # Learn more: http://github.com/javan/whenever
 
-every 1.day, at: '5:00 pm' do
+every 1.day, at: '3:57 am' do
   rake "hello_world:enable_for_all_programs"
 end
 

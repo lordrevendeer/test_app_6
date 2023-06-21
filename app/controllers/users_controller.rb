@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
     before_action :set_user, only: [:show, :edit, :update, :destroy]
     before_action :require_user, except: [:new, :create]
-    before_action :require_same_user, only: [:show, :edit, :update, :destroy]
+    before_action :require_same_user, only: [:update, :destroy]
+    before_action :require_admin, only: [:index, :show]
 
     def new
         @user = User.new
@@ -12,7 +13,11 @@ class UsersController < ApplicationController
     end
     
     def show
-        @habits = @user.habits.paginate(page: params[:page], per_page: 5)
+        if current_user != @user 
+            flash[:alert] = "You can only manage your own account"
+            redirect_to habits_path    
+        end
+        @habits = @user.habits.paginate(page: params[:page], per_page: 3)
     end
 
     def create
@@ -27,6 +32,10 @@ class UsersController < ApplicationController
     end 
 
     def edit
+        if current_user != @user 
+            flash[:alert] = "You can only manage your own account"
+            redirect_to habits_path    
+        end
     end    
 
     def destroy
@@ -51,13 +60,25 @@ class UsersController < ApplicationController
     end
 
     def set_user
+        if User.find_by(id: params[:id]).nil?
+            flash[:alert] = "You cannot see other users!"
+            redirect_to root_path
+        else    
         @user = User.find(params[:id])
+        end
     end
 
     def require_same_user
         if current_user != @user && !current_user.admin?
-          flash[:alert] = "You can only edit or delete your own account"
+          flash[:alert] = "You can only manage your own account"
           redirect_to habits_path    
         end
     end
+
+    def require_admin
+        if !(logged_in? && current_user.admin?)
+          flash[:alert] = "Action restricted to admins"
+          redirect_to categories_path
+        end 
+    end    
 end        

@@ -11,22 +11,31 @@
   <% p = 100 * s / t %>
 <% end %>
 <% t = t - s %>
-<div class="row justify-content-center align-items-center">
-  <div class="col-5">
-    <div class="text-left ml-5">
-      <div class="show-button">
-        <%= render 'stats/button' %>
+
+<% if calculate_missed(@habit.id) + count_yes(@habit.id) != @habit.days %>
+  <div class="row justify-content-center align-items-center">
+    <div class="col-5">
+      <div class="text-left ml-5">
+        <div class="show-button">
+          <%= render 'stats/button' %>
+        </div>
+      </div>
+    </div>
+    <div class="col-7">
+      <div class="text-left">
+        <h1 style="font-family: 'Times New Roman', Times, serif;"><%= @habit.title %></h1>
       </div>
     </div>
   </div>
-  <div class="col-7">
-    <div class="text-left">
-      <h1 style="font-family: 'Times New Roman', Times, serif;"><%= @habit.title %></h1>
+<% else %>
+  <div class="row justify-content-center align-items-center">
+    <div class>
+      <div class="text-left">
+        <h1 style="font-family: 'Times New Roman', Times, serif;"><%= @habit.title %></h1>
+      </div>
     </div>
   </div>
-</div>
-
-
+ <% end %> 
 
 <% if calculate_missed(@habit.id) + count_yes(@habit.id) == @habit.days %>
 <div class="container mb-5">

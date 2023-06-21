@@ -50,9 +50,9 @@ end
    end  
 
    def require_admin
-    if !(logged_in? && current_user.admin?)
-      flash[:alert] = "Action restricted to admins"
-      redirect_to categories_path
-    end  
+      if !(logged_in? && current_user.admin?)
+        flash[:alert] = "Action restricted to admins"
+        redirect_to categories_path
+      end  
    end 
 end    

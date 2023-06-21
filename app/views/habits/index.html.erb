@@ -19,11 +19,15 @@
 </div>   
 <% else %>
   <div>
-        <h2 class="text-center mt-4 " style="font-family: 'Times New Roman', Times, serif;"> Please create a habit! </h2>
-        <div class="container d-flex justify-content-center align-items-center">
+    <h2 class="text-center mt-4" style="font-family: 'Times New Roman', Times, serif;"> Please create a habit! </h2>
+    <div class="container d-flex justify-content-center align-items-center">
         <%= image_tag("error.jpeg", alt: "Image", class: "card-img-right", size: "400x400") %>
-        </div>
-  </div>    
+    </div>
+    <div class="container d-flex justify-content-center align-items-center">
+        <%= link_to "Create", new_habit_path, class: "btn btn-primary btn-lg mt-2" %>
+    </div>
+  </div>
+   
 <% end %> 
 
 
